@@ -1130,7 +1130,33 @@
       return s;
     });
 
-    ta.value = finalSentences.filter(s => s && s !== '.').join(' ');
+    // ── Step 6: Add natural transitions between sentences ──
+    const transitions = [
+      'Afterwards, ', 'From there, ', 'Following this, ',
+      'Later in the visit, ', 'Next, ', 'Shortly after, ',
+      'At that point, ', 'Once that was done, ',
+      'During this time, ', 'As the visit continued, ',
+      'Moving forward, ', 'Building on this, ',
+      '', '', '', ''  // Empty strings so not every sentence gets one
+    ];
+
+    const clean = finalSentences.filter(s => s && s !== '.');
+    let narrative = '';
+    for (let i = 0; i < clean.length; i++) {
+      if (i === 0) {
+        narrative += clean[i];
+      } else {
+        const t = transitions[Math.floor(Math.random() * transitions.length)];
+        if (t) {
+          // Lowercase the first letter of the sentence when adding a transition
+          const sent = clean[i].charAt(0).toLowerCase() + clean[i].slice(1);
+          narrative += ' ' + t + sent;
+        } else {
+          narrative += ' ' + clean[i];
+        }
+      }
+    }
+    ta.value = narrative;
   }
 
   // ══════════════════════════════════════════
