@@ -322,6 +322,199 @@
     margin-top: 6px;
     font-weight: 600;
   }
+  .btn-submit {
+    background: #27ae60;
+    color: #fff;
+  }
+  .btn-submit:hover { background: #219a52; }
+
+  /* ── Records Panel ── */
+  .records-panel {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    padding: 28px 36px;
+  }
+  .records-panel h2 {
+    font-size: 18px;
+    color: #2c3e50;
+    margin-bottom: 16px;
+  }
+  .records-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid #ecf0f1;
+    margin-bottom: 18px;
+  }
+  .records-tab {
+    padding: 8px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s;
+  }
+  .records-tab.active {
+    color: #2980b9;
+    border-bottom-color: #2980b9;
+  }
+  .records-tab-content { display: none; }
+  .records-tab-content.active { display: block; }
+  .badge {
+    display: inline-block;
+    background: #e74c3c;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge.green { background: #27ae60; }
+  .record-card {
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid #e67e22;
+  }
+  .record-card.completed { border-left-color: #27ae60; }
+  .record-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .record-card-date {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+  .record-card-meta {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+  }
+  .record-card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .btn-sm {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .btn-sm-blue { background: #2980b9; color: #fff; }
+  .btn-sm-red { background: #e74c3c; color: #fff; }
+  .btn-sm-gray { background: #ecf0f1; color: #555; }
+  .records-empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+    padding: 30px 0;
+  }
+  .btn-session {
+    width: 100%;
+    padding: 14px;
+    background: #e67e22;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 16px;
+    transition: background 0.2s;
+  }
+  .btn-session:hover { background: #d35400; }
+
+  /* ── Signing Session Modal ── */
+  .session-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #f0f2f5;
+    z-index: 99990;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .session-overlay.open { display: flex; }
+  .session-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    padding: 32px 36px;
+    max-width: 560px;
+    width: 100%;
+    text-align: center;
+  }
+  .session-progress {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .session-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 6px;
+  }
+  .session-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  .session-note-summary {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: left;
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #2c3e50;
+  }
+  .btn-approve {
+    width: 100%;
+    padding: 20px;
+    background: #27ae60;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-approve:active { transform: scale(0.98); }
+  .btn-approve:hover { background: #219a52; }
+  .session-skip {
+    font-size: 13px;
+    color: #aaa;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .session-skip:hover { color: #888; }
+  .session-done {
+    font-size: 18px;
+    color: #27ae60;
+    font-weight: 700;
+    padding: 20px 0;
+  }
 
   /* ── Print Pages (hidden by default, shown in preview & print) ── */
   .print-page {
@@ -657,8 +850,51 @@
   <!-- Buttons -->
   <div class="btn-row">
     <button class="btn btn-preview" onclick="showPreview()">Preview Notes</button>
-    <button class="btn btn-save" onclick="saveAsWord()">Save as Word</button>
+    <button class="btn btn-submit" onclick="submitNote()">Submit &amp; Save</button>
     <button class="btn btn-clear" onclick="clearForm()">Clear Form</button>
+  </div>
+</div>
+
+<!-- ── Records Panel ── -->
+<div class="records-panel" id="recordsPanel">
+  <h2>Saved Notes</h2>
+  <div class="records-tabs">
+    <div class="records-tab active" id="tabPending" onclick="switchTab('pending')">
+      Needs Signing <span class="badge" id="pendingBadge">0</span>
+    </div>
+    <div class="records-tab" id="tabCompleted" onclick="switchTab('completed')">
+      Completed <span class="badge green" id="completedBadge">0</span>
+    </div>
+  </div>
+
+  <div class="records-tab-content active" id="contentPending">
+    <button class="btn-session" id="btnSession" onclick="openSignSession()" style="display:none;">
+      Start John's Signing Session
+    </button>
+    <div id="pendingList"></div>
+  </div>
+
+  <div class="records-tab-content" id="contentCompleted">
+    <div id="completedList"></div>
+  </div>
+</div>
+
+<!-- ── Signing Session Modal ── -->
+<div class="session-overlay" id="sessionOverlay">
+  <div class="session-card">
+    <div class="session-progress" id="sessionProgress"></div>
+    <div class="session-title">Hi John!</div>
+    <div class="session-subtitle" id="sessionSubtitle"></div>
+    <div class="session-note-summary" id="sessionSummary"></div>
+    <button class="btn-approve" id="btnApprove" onclick="approveCurrentRecord()">
+      ✓ I Approve This Note
+    </button>
+    <div class="session-skip" onclick="skipCurrentRecord()">Skip for now →</div>
+    <div class="session-done" id="sessionDone" style="display:none;">
+      All done! Thanks John. ✓
+      <br><br>
+      <button class="btn btn-clear" style="font-size:14px;" onclick="closeSignSession()">Close</button>
+    </div>
   </div>
 </div>
 
@@ -1492,6 +1728,333 @@ Additional Contact: Via phone or in person, as needed/requested
     document.getElementById('serviceDate').value = `${yyyy}-${mm}-${dd}`;
     localStorage.removeItem('dsn_autosave');
   }
+
+  // ══════════════════════════════════════════
+  // ── Records System ──
+  // ══════════════════════════════════════════
+
+  function getRecords() {
+    try { return JSON.parse(localStorage.getItem('dsn_records') || '[]'); }
+    catch(e) { return []; }
+  }
+
+  function saveRecords(records) {
+    localStorage.setItem('dsn_records', JSON.stringify(records));
+  }
+
+  function submitNote() {
+    const staff = document.getElementById('staffName').value;
+    const dateVal = document.getElementById('serviceDate').value;
+    const ihcsText = document.getElementById('ihcsNarrative').value.trim();
+    const compText = document.getElementById('compNarrative').value.trim();
+
+    if (!staff) { alert('Please select a staff name before submitting.'); return; }
+    if (!dateVal) { alert('Please enter a service date before submitting.'); return; }
+    if (!ihcsText && !compText) { alert('Please enter at least one narrative before submitting.'); return; }
+
+    const record = {
+      id: Date.now(),
+      date: dateVal,
+      staff: staff,
+      submittedAt: new Date().toISOString(),
+      cleSig: null,
+      sspSig: getSspSig(),
+      hasIHCS: ihcsText !== '',
+      hasComp: compText !== '',
+      ihcs: ihcsText ? {
+        location: document.getElementById('ihcsLocation').value,
+        timeIn: readTimeDisplay('ihcsHrIn','ihcsMinIn','ihcsAmpmIn'),
+        timeOut: readTimeDisplay('ihcsHrOut','ihcsMinOut','ihcsAmpmOut'),
+        units: getUnitsText('ihcsHrIn','ihcsMinIn','ihcsAmpmIn','ihcsHrOut','ihcsMinOut','ihcsAmpmOut'),
+        narrative: ihcsText
+      } : null,
+      comp: compText ? {
+        location: document.getElementById('compLocation').value,
+        timeIn: readTimeDisplay('compHrIn','compMinIn','compAmpmIn'),
+        timeOut: readTimeDisplay('compHrOut','compMinOut','compAmpmOut'),
+        units: getUnitsText('compHrIn','compMinIn','compAmpmIn','compHrOut','compMinOut','compAmpmOut'),
+        narrative: compText
+      } : null
+    };
+
+    const records = getRecords();
+    records.push(record);
+    saveRecords(records);
+
+    downloadRecordAsWord(record);
+    clearForm();
+    loadRecordsPanel();
+    alert('Note saved! A Word document has been downloaded. John can sign it later from the Saved Notes section.');
+  }
+
+  function deleteRecord(id) {
+    if (!confirm('Delete this record permanently?')) return;
+    const records = getRecords().filter(r => r.id !== id);
+    saveRecords(records);
+    loadRecordsPanel();
+  }
+
+  function formatDateDisplay(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr + 'T00:00:00');
+    return (d.getMonth()+1) + '/' + d.getDate() + '/' + String(d.getFullYear()).slice(-2);
+  }
+
+  function loadRecordsPanel() {
+    const records = getRecords();
+    const pending = records.filter(r => !r.cleSig);
+    const completed = records.filter(r => r.cleSig);
+
+    document.getElementById('pendingBadge').textContent = pending.length;
+    document.getElementById('completedBadge').textContent = completed.length;
+
+    const btnSession = document.getElementById('btnSession');
+    btnSession.style.display = pending.length > 0 ? '' : 'none';
+
+    // Pending list
+    const pendingList = document.getElementById('pendingList');
+    if (pending.length === 0) {
+      pendingList.innerHTML = '<div class="records-empty">No notes waiting to be signed.</div>';
+    } else {
+      pendingList.innerHTML = pending.slice().reverse().map(r => `
+        <div class="record-card">
+          <div class="record-card-top">
+            <div>
+              <div class="record-card-date">${formatDateDisplay(r.date)}</div>
+              <div class="record-card-meta">${r.staff} &nbsp;|&nbsp; ${[r.hasIHCS ? 'IHCS' : '', r.hasComp ? 'Companion' : ''].filter(Boolean).join(' + ')}</div>
+            </div>
+            <span style="font-size:12px;color:#e67e22;font-weight:600;">⏳ Needs John's signature</span>
+          </div>
+          <div class="record-card-actions">
+            <button class="btn-sm btn-sm-blue" onclick="downloadRecordAsWord(getRecordById(${r.id}))">Download Word</button>
+            <button class="btn-sm btn-sm-gray" onclick="deleteRecord(${r.id})">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+
+    // Completed list
+    const completedList = document.getElementById('completedList');
+    if (completed.length === 0) {
+      completedList.innerHTML = '<div class="records-empty">No completed notes yet.</div>';
+    } else {
+      completedList.innerHTML = completed.slice().reverse().map(r => `
+        <div class="record-card completed">
+          <div class="record-card-top">
+            <div>
+              <div class="record-card-date">${formatDateDisplay(r.date)}</div>
+              <div class="record-card-meta">${r.staff} &nbsp;|&nbsp; ${[r.hasIHCS ? 'IHCS' : '', r.hasComp ? 'Companion' : ''].filter(Boolean).join(' + ')}</div>
+            </div>
+            <span style="font-size:12px;color:#27ae60;font-weight:600;">✓ Signed</span>
+          </div>
+          <div class="record-card-actions">
+            <button class="btn-sm btn-sm-blue" onclick="downloadRecordAsWord(getRecordById(${r.id}))">Download Word</button>
+            <button class="btn-sm btn-sm-gray" onclick="deleteRecord(${r.id})">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+  }
+
+  function getRecordById(id) {
+    return getRecords().find(r => r.id === id) || null;
+  }
+
+  function switchTab(tab) {
+    document.getElementById('tabPending').classList.toggle('active', tab === 'pending');
+    document.getElementById('tabCompleted').classList.toggle('active', tab === 'completed');
+    document.getElementById('contentPending').classList.toggle('active', tab === 'pending');
+    document.getElementById('contentCompleted').classList.toggle('active', tab === 'completed');
+  }
+
+  // ── Signing Session ──
+
+  let _sessionQueue = [];
+  let _sessionIndex = 0;
+
+  function openSignSession() {
+    const cleSig = localStorage.getItem('dsn_sig_cle');
+    if (!cleSig) {
+      alert("John's signature hasn't been saved yet. Please have him draw his signature in the CLE Signature section first.");
+      return;
+    }
+    _sessionQueue = getRecords().filter(r => !r.cleSig);
+    if (_sessionQueue.length === 0) { alert('No notes waiting to be signed!'); return; }
+    _sessionIndex = 0;
+    document.getElementById('sessionOverlay').classList.add('open');
+    renderSessionCard();
+  }
+
+  function renderSessionCard() {
+    const total = _sessionQueue.length;
+    const done = document.getElementById('sessionDone');
+    const approve = document.getElementById('btnApprove');
+    const skip = document.querySelector('.session-skip');
+
+    if (_sessionIndex >= total) {
+      done.style.display = '';
+      approve.style.display = 'none';
+      skip.style.display = 'none';
+      document.getElementById('sessionProgress').textContent = '';
+      document.getElementById('sessionSubtitle').textContent = '';
+      document.getElementById('sessionSummary').innerHTML = '';
+      return;
+    }
+
+    done.style.display = 'none';
+    approve.style.display = '';
+    skip.style.display = '';
+
+    const r = _sessionQueue[_sessionIndex];
+    document.getElementById('sessionProgress').textContent = `Note ${_sessionIndex + 1} of ${total}`;
+    document.getElementById('sessionSubtitle').textContent = `Please review this note and tap Approve to sign it.`;
+
+    const services = [r.hasIHCS ? 'IHCS' : '', r.hasComp ? 'Companion' : ''].filter(Boolean).join(' + ');
+    let summary = `<strong>Date:</strong> ${formatDateDisplay(r.date)}<br>
+<strong>Staff:</strong> ${r.staff}<br>
+<strong>Services:</strong> ${services}<br>`;
+    if (r.ihcs) summary += `<br><strong>IHCS Notes:</strong><br><span style="color:#555;">${r.ihcs.narrative.substring(0,200)}${r.ihcs.narrative.length > 200 ? '...' : ''}</span>`;
+    if (r.comp) summary += `<br><br><strong>Companion Notes:</strong><br><span style="color:#555;">${r.comp.narrative.substring(0,200)}${r.comp.narrative.length > 200 ? '...' : ''}</span>`;
+    document.getElementById('sessionSummary').innerHTML = summary;
+  }
+
+  function approveCurrentRecord() {
+    const cleSig = localStorage.getItem('dsn_sig_cle');
+    if (!cleSig) { alert("No CLE signature found."); return; }
+    const r = _sessionQueue[_sessionIndex];
+    const records = getRecords();
+    const idx = records.findIndex(rec => rec.id === r.id);
+    if (idx !== -1) {
+      records[idx].cleSig = cleSig;
+      records[idx].signedAt = new Date().toISOString();
+      saveRecords(records);
+      downloadRecordAsWord(records[idx]);
+    }
+    _sessionIndex++;
+    renderSessionCard();
+    loadRecordsPanel();
+  }
+
+  function skipCurrentRecord() {
+    _sessionIndex++;
+    renderSessionCard();
+  }
+
+  function closeSignSession() {
+    document.getElementById('sessionOverlay').classList.remove('open');
+  }
+
+  // ── Download record as Word ──
+
+  function downloadRecordAsWord(record) {
+    if (!record) return;
+    const fDate = formatDateDisplay(record.date);
+    const staff = record.staff || '________';
+    const sspSigHtml = record.sspSig
+      ? `<img src="${record.sspSig}" style="height:28pt;vertical-align:bottom;">`
+      : '<span style="display:inline-block;width:250pt;border-bottom:1px solid #000;">&nbsp;</span>';
+    const cleSigHtml = record.cleSig
+      ? `<img src="${record.cleSig}" style="height:28pt;vertical-align:bottom;">`
+      : '<span style="display:inline-block;width:250pt;border-bottom:1px solid #000;">&nbsp;</span>';
+
+    let pages = '';
+
+    if (record.hasIHCS && record.ihcs) {
+      const d = record.ihcs;
+      pages += `
+<h1>IHCS Daily Service Notes</h1>
+<h2>Participant Information</h2>
+<p><b>Name:</b> John McMaster<br><b>MA#:</b> _________________<br><b>Qualified SSP Providing Service:</b> ${staff}</p>
+<div class="box">
+<h3>Service Plan 1: IHCS - Independence and Life Skills</h3>
+<p><b>Outcome Period:</b> April 21, 2025 to April 20, 2026</p>
+<p><b>Outcome Statement:</b> John has the confidence and skills needed to be as independent as possible by figuring out what he can do for himself and learning what he needs help with, so that he can take care of himself and feel more in control of his life.</p>
+<p><b>Outcome Actions &mdash; Support staff will:</b></p>
+<ul>
+<li>Provide clear and simple instructions</li><li>Offer choices in daily tasks</li>
+<li>Use visual aids like schedules and checklists</li>
+<li>Incorporate new interests by exploring activities with John</li>
+<li>Introduce easy-to-use budgeting tools</li>
+<li>Encourage problem-solving through trial and error</li>
+<li>Build confidence with positive reinforcement by celebrating small successes</li>
+<li>Provide emotional support by offering reassurance and addressing any anxiety or fear John may have</li>
+<li>Offer reminders for John to take care of his hygiene needs</li>
+</ul>
+<p style="font-size:9pt;color:#555;">(Additional details available in Know and Do documentation)</p>
+<p style="font-size:9pt;">Service Coordinator (SC) will locate, coordinate, and monitor all services and assure health, safety, and satisfaction with waiver services.</p>
+</div>
+<div class="freq"><b>Frequency and Duration:</b><br>IHCS: 21 hours per week<br>Daily Maximum: Support cannot exceed 14 hours per day<br>SC Monitoring: Face-to-face visits at minimum once every other month, with at least one visit every 4 months occurring in the home<br>Additional Contact: Via phone or in person, as needed/requested</div>
+<div class="doc-section">
+<h2>Service Documentation</h2>
+<div class="fields"><b>Date:</b> ${fDate} &nbsp;&nbsp;&nbsp;&nbsp; <b>Location of Service:</b> ${d.location}<br><b>Level of Service:</b> IHCS &nbsp;&nbsp;&nbsp;&nbsp; <b>Time In:</b> ${d.timeIn}<br><b>Time Out:</b> ${d.timeOut} &nbsp;&nbsp;&nbsp;&nbsp; <b>Total Units:</b> ${d.units}</div>
+<p class="narrative-label">Description of Service Provided:</p>
+<p class="narrative">${d.narrative}</p>
+<div class="sig"><b>Date Note Completed:</b> ${fDate}<br><b>Signature of SSP:</b> ${sspSigHtml} <b>Date:</b> ${fDate}<br><b>Signature of CLE:</b> ${cleSigHtml} <b>Date:</b> ${fDate}</div>
+</div>`;
+    }
+
+    if (record.hasIHCS && record.hasComp) pages += '<div class="page-break"></div>';
+
+    if (record.hasComp && record.comp) {
+      const d = record.comp;
+      pages += `
+<h1>IHCS Daily Service Notes</h1>
+<h2>Participant Information</h2>
+<p><b>Name:</b> John McMaster<br><b>MA#:</b> _________________<br><b>Qualified SSP Providing Service:</b> ${staff}</p>
+<div class="box">
+<h3>Service Plan 2: Companion - Routine and Quality of Life</h3>
+<p><b>Outcome Period:</b> April 21, 2025 to April 20, 2026</p>
+<p><b>Outcome Statement:</b> John keeps a consistent routine, making time for work and play, so that he keeps living the life he enjoys most.</p>
+<p><b>Outcome Actions &mdash; Support staff will:</b></p>
+<ul>
+<li>Offer specific choice/s instead of asking vague questions like "What do you want to do?" to help reduce anxiety</li>
+<li>Remind John to write down his schedule and plans with work or friends</li>
+<li>Provide necessary supervision in community settings to ensure his health and safety</li>
+<li>Provide supervision to ensure John takes his medication correctly</li>
+<li>Schedule medical appointments and follow up to ensure attendance and compliance with recommendations</li>
+<li>Offer reminders for John to take care of his hygiene needs</li>
+</ul>
+<p style="font-size:9pt;">Service Coordinator (SC) will locate, coordinate, and monitor all services and assure health, safety, and satisfaction with waiver services.</p>
+</div>
+<div class="freq"><b>Frequency and Duration:</b><br>Companion Support: 68 hours per week<br>Daily Maximum: Support cannot exceed 14 hours per day<br>SC Monitoring: Face-to-face visits at minimum once every other month, with at least one visit every 4 months occurring in the home<br>Additional Contact: Via phone or in person, as needed/requested</div>
+<div class="doc-section">
+<h2>Service Documentation</h2>
+<div class="fields"><b>Date:</b> ${fDate} &nbsp;&nbsp;&nbsp;&nbsp; <b>Location of Service:</b> ${d.location}<br><b>Level of Service:</b> Companion &nbsp;&nbsp;&nbsp;&nbsp; <b>Time In:</b> ${d.timeIn}<br><b>Time Out:</b> ${d.timeOut} &nbsp;&nbsp;&nbsp;&nbsp; <b>Total Units:</b> ${d.units}</div>
+<p class="narrative-label">Description of Service Provided:</p>
+<p class="narrative">${d.narrative}</p>
+<div class="sig"><b>Date Note Completed:</b> ${fDate}<br><b>Signature of SSP:</b> ${sspSigHtml} <b>Date:</b> ${fDate}<br><b>Signature of CLE:</b> ${cleSigHtml} <b>Date:</b> ${fDate}</div>
+</div>`;
+    }
+
+    const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+<head><meta charset="utf-8"><style>
+body{font-family:'Times New Roman',serif;font-size:12pt;color:#000;}
+.page-break{page-break-before:always;}
+h1{font-size:16pt;text-align:center;margin-bottom:8pt;}
+h2{font-size:11pt;font-weight:bold;margin:10pt 0 4pt 0;}
+.box{border:1px solid #999;padding:8pt 10pt;margin-bottom:8pt;}
+.box h3{font-size:11pt;margin-bottom:4pt;}
+.box p,.box li{font-size:10pt;margin-bottom:2pt;}
+.freq{font-size:10pt;margin-bottom:8pt;}
+.doc-section{border-top:2px solid #000;padding-top:6pt;margin-top:12pt;}
+.fields{font-size:11pt;line-height:2;}
+.narrative-label{font-size:11pt;font-weight:bold;margin:8pt 0 4pt 0;}
+.narrative{font-size:11pt;line-height:1.6;min-height:80pt;}
+.sig{font-size:11pt;line-height:2.4;margin-top:14pt;}
+</style></head><body>${pages}</body></html>`;
+
+    const blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const signed = record.cleSig ? '_SIGNED' : '_PENDING';
+    a.href = url;
+    a.download = `ServiceNote_${record.date}_${(record.staff||'').replace(' ','_')}${signed}.doc`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Load records on startup
+  loadRecordsPanel();
 </script>
 
 </body>
