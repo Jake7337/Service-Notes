@@ -300,6 +300,28 @@
     margin-top: 14px;
     justify-content: center;
   }
+  .btn-sign-here {
+    width: 100%;
+    padding: 18px;
+    background: #e67e22;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-sign-here:active { transform: scale(0.97); }
+  .btn-sign-here.signed { background: #27ae60; font-size: 16px; }
+  .btn-sign-here:hover { filter: brightness(1.08); }
+  .sig-saved-note {
+    font-size: 12px;
+    color: #27ae60;
+    margin-top: 6px;
+    font-weight: 600;
+  }
 
   /* ── Print Pages (hidden by default, shown in preview & print) ── */
   .print-page {
@@ -608,16 +630,27 @@
     </div>
   </div>
 
-  <!-- Signature -->
+  <!-- SSP Signature -->
   <div class="form-section">
     <h2>SSP Signature</h2>
+    <p style="font-size:12px;color:#888;margin-bottom:10px;">Saved per staff member — select your name above first.</p>
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
       <div class="sig-preview-wrap" id="sigPreviewWrap" style="flex:1;min-width:200px;">
-        <span id="sigPreviewEmpty" style="color:#aaa;">No signature yet</span>
+        <span id="sigPreviewEmpty" style="color:#aaa;">No signature saved for this staff member</span>
         <img id="sigPreviewImg" style="display:none;max-height:34px;" alt="Signature">
       </div>
-      <button class="btn btn-preview" style="padding:8px 18px;font-size:13px;" onclick="openSigPad()">Draw Signature</button>
-      <button class="btn btn-clear" style="padding:8px 14px;font-size:13px;" onclick="clearSignature()">Clear</button>
+      <button class="btn btn-preview" style="padding:8px 18px;font-size:13px;" onclick="openSigPad('ssp')">Draw / Update</button>
+      <button class="btn btn-clear" style="padding:8px 14px;font-size:13px;" onclick="clearSspSignature()">Clear</button>
+    </div>
+  </div>
+
+  <!-- CLE Signature -->
+  <div class="form-section">
+    <h2>CLE Signature — John McMaster</h2>
+    <p style="font-size:12px;color:#888;margin-bottom:12px;">Saved permanently. John only needs to sign once.</p>
+    <button class="btn-sign-here" id="cleSignBtn" onclick="openSigPad('cle')">Sign Here</button>
+    <div class="sig-preview-wrap" id="clePreviewWrap" style="margin-top:10px;display:none;">
+      <img id="clePreviewImg" style="max-height:34px;" alt="CLE Signature">
     </div>
   </div>
 
@@ -632,7 +665,7 @@
 <!-- ── Signature Pad Modal ── -->
 <div class="sig-modal-overlay" id="sigModalOverlay">
   <div class="sig-modal">
-    <h3>Draw Your Signature</h3>
+    <h3 id="sigModalTitle">Draw Your Signature</h3>
     <p>Use your mouse or finger to sign below</p>
     <canvas id="sigCanvas" width="420" height="120"></canvas>
     <div class="sig-btn-row">
@@ -706,7 +739,7 @@
     <div class="print-sig-section">
       <strong>Date Note Completed:</strong> <span id="p1DateCompleted"></span><br>
       <strong>Signature of SSP:</strong> <span id="p1SspSig" class="sig-line"></span> <strong>Date:</strong> <span id="p1SigDate1"></span><br>
-      <strong>Signature of CLE:</strong> <span class="sig-line"></span> <strong>Date:</strong> <span id="p1SigDate2"></span>
+      <strong>Signature of CLE:</strong> <span id="p1CleSig" class="sig-line"></span> <strong>Date:</strong> <span id="p1SigDate2"></span>
     </div>
   </div>
 </div>
@@ -763,7 +796,7 @@
     <div class="print-sig-section">
       <strong>Date Note Completed:</strong> <span id="p2DateCompleted"></span><br>
       <strong>Signature of SSP:</strong> <span id="p2SspSig" class="sig-line"></span> <strong>Date:</strong> <span id="p2SigDate1"></span><br>
-      <strong>Signature of CLE:</strong> <span class="sig-line"></span> <strong>Date:</strong> <span id="p2SigDate2"></span>
+      <strong>Signature of CLE:</strong> <span id="p2CleSig" class="sig-line"></span> <strong>Date:</strong> <span id="p2SigDate2"></span>
     </div>
   </div>
 </div>
@@ -847,6 +880,7 @@
   if (savedStaff) document.getElementById('staffName').value = savedStaff;
   document.getElementById('staffName').addEventListener('change', function() {
     localStorage.setItem('dsn_staffName', this.value);
+    loadSspSigPreview();
   });
 
   // ══════════════════════════════════════════
@@ -932,9 +966,54 @@
   // ── Signature Pad ──
   // ══════════════════════════════════════════
 
-  let savedSignature = null;
+  let _sigPadMode = 'ssp'; // 'ssp' or 'cle'
 
-  function openSigPad() {
+  function getSspSig() {
+    const staff = document.getElementById('staffName').value;
+    if (!staff) return null;
+    return localStorage.getItem('dsn_sig_' + staff) || null;
+  }
+
+  function loadSspSigPreview() {
+    const sig = getSspSig();
+    const img = document.getElementById('sigPreviewImg');
+    const empty = document.getElementById('sigPreviewEmpty');
+    if (sig) {
+      img.src = sig;
+      img.style.display = '';
+      empty.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      empty.style.display = '';
+    }
+  }
+
+  function loadCleSigPreview() {
+    const sig = localStorage.getItem('dsn_sig_cle');
+    const btn = document.getElementById('cleSignBtn');
+    const wrap = document.getElementById('clePreviewWrap');
+    const img = document.getElementById('clePreviewImg');
+    if (sig) {
+      btn.textContent = '✓ John Has Signed — Tap to Re-Sign';
+      btn.classList.add('signed');
+      img.src = sig;
+      wrap.style.display = '';
+    } else {
+      btn.textContent = 'Sign Here';
+      btn.classList.remove('signed');
+      wrap.style.display = 'none';
+    }
+  }
+
+  function openSigPad(mode) {
+    _sigPadMode = mode || 'ssp';
+    const title = document.getElementById('sigModalTitle');
+    if (_sigPadMode === 'cle') {
+      title.textContent = 'John McMaster — Draw Signature';
+    } else {
+      const staff = document.getElementById('staffName').value || 'SSP';
+      title.textContent = staff + ' — Draw Signature';
+    }
     document.getElementById('sigModalOverlay').classList.add('open');
     initSigCanvas();
   }
@@ -943,19 +1022,25 @@
     document.getElementById('sigModalOverlay').classList.remove('open');
   }
 
-  function clearSignature() {
-    savedSignature = null;
-    document.getElementById('sigPreviewImg').style.display = 'none';
-    document.getElementById('sigPreviewEmpty').style.display = '';
+  function clearSspSignature() {
+    const staff = document.getElementById('staffName').value;
+    if (staff) localStorage.removeItem('dsn_sig_' + staff);
+    loadSspSigPreview();
   }
 
   function saveSigFromCanvas() {
     const canvas = document.getElementById('sigCanvas');
-    savedSignature = canvas.toDataURL('image/png');
-    const img = document.getElementById('sigPreviewImg');
-    img.src = savedSignature;
-    img.style.display = '';
-    document.getElementById('sigPreviewEmpty').style.display = 'none';
+    const dataUrl = canvas.toDataURL('image/png');
+    if (_sigPadMode === 'cle') {
+      localStorage.setItem('dsn_sig_cle', dataUrl);
+      loadCleSigPreview();
+    } else {
+      const staff = document.getElementById('staffName').value;
+      if (staff) {
+        localStorage.setItem('dsn_sig_' + staff, dataUrl);
+        loadSspSigPreview();
+      }
+    }
     closeSigPad();
   }
 
@@ -1052,22 +1137,26 @@
     document.getElementById('p1Staff').textContent = staff;
     document.getElementById('p2Staff').textContent = staff;
 
-    // Inject signature into SSP sig lines
-    function applySig(spanId) {
+    // Inject a saved signature (or blank line) into a span
+    function applySig(spanId, dataUrl) {
       const span = document.getElementById(spanId);
       if (!span) return;
-      if (savedSignature) {
-        span.innerHTML = '';
+      span.innerHTML = '';
+      if (dataUrl) {
         span.style.borderBottom = 'none';
         const img = document.createElement('img');
-        img.src = savedSignature;
+        img.src = dataUrl;
         img.style.cssText = 'height:28pt;vertical-align:bottom;';
         span.appendChild(img);
       } else {
-        span.innerHTML = '';
         span.style.borderBottom = '1px solid #000';
+        span.style.display = 'inline-block';
+        span.style.width = '250pt';
       }
     }
+
+    const sspSig = getSspSig();
+    const cleSig = localStorage.getItem('dsn_sig_cle');
 
     // IHCS fields
     if (hasIHCS) {
@@ -1080,7 +1169,8 @@
       document.getElementById('p1DateCompleted').textContent = fDate;
       document.getElementById('p1SigDate1').textContent = fDate;
       document.getElementById('p1SigDate2').textContent = fDate;
-      applySig('p1SspSig');
+      applySig('p1SspSig', sspSig);
+      applySig('p1CleSig', cleSig);
     }
 
     // Companion fields
@@ -1094,7 +1184,8 @@
       document.getElementById('p2DateCompleted').textContent = fDate;
       document.getElementById('p2SigDate1').textContent = fDate;
       document.getElementById('p2SigDate2').textContent = fDate;
-      applySig('p2SspSig');
+      applySig('p2SspSig', sspSig);
+      applySig('p2CleSig', cleSig);
     }
   }
 
@@ -1374,6 +1465,8 @@ Additional Contact: Via phone or in person, as needed/requested
     calcUnits('compHrIn','compMinIn','compAmpmIn','compHrOut','compMinOut','compAmpmOut','compUnits');
   }
   autoRestore();
+  loadSspSigPreview();
+  loadCleSigPreview();
 
   // Save on every change
   saveFields.forEach(id => {
