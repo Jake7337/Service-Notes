@@ -965,6 +965,8 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
+  let _sigListenersAttached = false;
+
   function initSigCanvas() {
     const canvas = document.getElementById('sigCanvas');
     const ctx = canvas.getContext('2d');
@@ -974,13 +976,17 @@
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
+    if (_sigListenersAttached) return;
+    _sigListenersAttached = true;
+
     let drawing = false;
     let lastX = 0, lastY = 0;
 
     function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
+      const c = document.getElementById('sigCanvas');
+      const rect = c.getBoundingClientRect();
+      const scaleX = c.width / rect.width;
+      const scaleY = c.height / rect.height;
       if (e.touches) {
         return [(e.touches[0].clientX - rect.left) * scaleX,
                 (e.touches[0].clientY - rect.top) * scaleY];
@@ -989,40 +995,40 @@
               (e.clientY - rect.top) * scaleY];
     }
 
-    // Remove old listeners by cloning
-    const newCanvas = canvas.cloneNode(true);
-    canvas.parentNode.replaceChild(newCanvas, canvas);
-    const c = document.getElementById('sigCanvas');
-    const cx = c.getContext('2d');
-    cx.strokeStyle = '#000';
-    cx.lineWidth = 2;
-    cx.lineCap = 'round';
-    cx.lineJoin = 'round';
-
-    c.addEventListener('mousedown', e => { drawing = true; [lastX, lastY] = getPos(e); });
-    c.addEventListener('mousemove', e => {
+    canvas.addEventListener('mousedown', e => { drawing = true; [lastX, lastY] = getPos(e); });
+    canvas.addEventListener('mousemove', e => {
       if (!drawing) return;
       const [x, y] = getPos(e);
+      const cx = document.getElementById('sigCanvas').getContext('2d');
+      cx.strokeStyle = '#000';
+      cx.lineWidth = 2;
+      cx.lineCap = 'round';
+      cx.lineJoin = 'round';
       cx.beginPath();
       cx.moveTo(lastX, lastY);
       cx.lineTo(x, y);
       cx.stroke();
       [lastX, lastY] = [x, y];
     });
-    c.addEventListener('mouseup', () => drawing = false);
-    c.addEventListener('mouseleave', () => drawing = false);
-    c.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; [lastX, lastY] = getPos(e); });
-    c.addEventListener('touchmove', e => {
+    canvas.addEventListener('mouseup', () => drawing = false);
+    canvas.addEventListener('mouseleave', () => drawing = false);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; [lastX, lastY] = getPos(e); }, { passive: false });
+    canvas.addEventListener('touchmove', e => {
       e.preventDefault();
       if (!drawing) return;
       const [x, y] = getPos(e);
+      const cx = document.getElementById('sigCanvas').getContext('2d');
+      cx.strokeStyle = '#000';
+      cx.lineWidth = 2;
+      cx.lineCap = 'round';
+      cx.lineJoin = 'round';
       cx.beginPath();
       cx.moveTo(lastX, lastY);
       cx.lineTo(x, y);
       cx.stroke();
       [lastX, lastY] = [x, y];
-    });
-    c.addEventListener('touchend', () => drawing = false);
+    }, { passive: false });
+    canvas.addEventListener('touchend', () => drawing = false);
   }
 
   // ══════════════════════════════════════════
